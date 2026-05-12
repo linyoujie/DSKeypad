@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DS Keypad</title>
+  <meta name="description" content="DS Keypad turns the AYANEO Pocket DS secondary screen into a keyboard and touchpad.">
+  <style>
+    :root {
+      --bg: #06142c;
+      --panel: rgba(255, 255, 255, 0.1);
+      --panel-strong: rgba(255, 255, 255, 0.16);
+      --text: #f5f9ff;
+      --muted: #bad0ee;
+      --accent: #45c9ff;
+      --accent-2: #0b63f6;
+      --line: rgba(255, 255, 255, 0.22);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 16% 18%, rgba(69, 201, 255, 0.34), transparent 26rem),
+        radial-gradient(circle at 84% 8%, rgba(91, 255, 184, 0.22), transparent 24rem),
+        linear-gradient(145deg, #06142c 0%, #063b90 62%, #0a6bf2 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 28px 20px 56px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 64px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .logo {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+    }
+
+    nav {
+      display: flex;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+      gap: 44px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.08);
+      font-weight: 700;
+      font-size: 0.86rem;
+    }
+
+    h1 {
+      margin: 20px 0 18px;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      line-height: 0.92;
+      letter-spacing: -0.07em;
+    }
+
+    .lead {
+      max-width: 620px;
+      color: var(--muted);
+      font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+      line-height: 1.55;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    .button.primary {
+      background: #ffffff;
+      color: #08377d;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
+    }
+
+    .button.secondary {
+      background: var(--panel);
+      color: var(--text);
+    }
+
+    .device-card {
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      padding: 24px;
+      background: linear-gradient(180deg, var(--panel-strong), rgba(255, 255, 255, 0.06));
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(18px);
+    }
+
+    .screen {
+      border: 3px solid rgba(255, 255, 255, 0.92);
+      border-radius: 24px 24px 12px 12px;
+      padding: 22px;
+      margin-bottom: 12px;
+      min-height: 150px;
+    }
+
+    .search {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 3px solid rgba(255, 255, 255, 0.92);
+      border-radius: 18px;
+      padding: 12px 16px;
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    .base {
+      border: 3px solid rgba(255, 255, 255, 0.92);
+      border-radius: 12px 12px 30px 30px;
+      padding: 22px;
+      display: grid;
+      grid-template-columns: 82px 1fr 82px;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .stick, .buttons {
+      display: grid;
+      place-items: center;
+      height: 82px;
+      border-radius: 28px;
+      border: 3px solid rgba(255, 255, 255, 0.92);
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    .pad {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 150px;
+      overflow: hidden;
+      border: 3px solid rgba(255, 255, 255, 0.92);
+      border-radius: 22px;
+    }
+
+    .keys, .touch {
+      padding: 16px;
+    }
+
+    .keys {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      border-right: 3px solid rgba(255, 255, 255, 0.92);
+    }
+
+    .key {
+      border: 2px solid rgba(255, 255, 255, 0.78);
+      border-radius: 9px;
+    }
+
+    .space {
+      grid-column: span 2;
+    }
+
+    .touch {
+      display: grid;
+      place-items: center;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 3.3rem;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 58px;
+    }
+
+    .feature {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 22px;
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .feature h2 {
+      margin: 0 0 8px;
+      font-size: 1.2rem;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 52px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    @media (max-width: 820px) {
+      header, nav {
+        align-items: flex-start;
+      }
+
+      header, .hero {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        flex-direction: column;
+        margin-bottom: 42px;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .base {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">DS</div>
+        <span>DS Keypad</span>
+      </div>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Made mainly for AYANEO Pocket DS</span>
+        <h1>Second-screen input, made useful.</h1>
+        <p class="lead">
+          DS Keypad turns the AYANEO Pocket DS secondary screen into a keyboard and touchpad,
+          so the main screen can stay focused on your app or game.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="privacy.html">Privacy Policy</a>
+          <a class="button secondary" href="https://github.com/linyoujie/ayaneoPocketDsUtility">GitHub Repository</a>
+        </div>
+      </div>
+
+      <div class="device-card" aria-label="DS Keypad app illustration">
+        <div class="screen">
+          <div class="search">
+            <span>DS</span>
+            <span>⌕</span>
+          </div>
+        </div>
+        <div class="base">
+          <div class="stick">+</div>
+          <div class="pad">
+            <div class="keys">
+              <div class="key"></div>
+              <div class="key"></div>
+              <div class="key"></div>
+              <div class="key"></div>
+              <div class="key"></div>
+              <div class="key"></div>
+              <div class="key"></div>
+              <div class="key"></div>
+              <div class="key space"></div>
+            </div>
+            <div class="touch">⌾</div>
+          </div>
+          <div class="buttons">○</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="features">
+      <div class="feature">
+        <h2>Full Keyboard</h2>
+        <p>A full keyboard layout for secondary-screen typing and quick input.</p>
+      </div>
+      <div class="feature">
+        <h2>Type Keyboard</h2>
+        <p>A compact phone-style typing layout for faster thumb input.</p>
+      </div>
+      <div class="feature">
+        <h2>Touchpad</h2>
+        <p>Use the secondary screen as a touchpad for pointer movement and clicks.</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        DS Keypad is designed and tested mainly for AYANEO Pocket DS. Other dual-screen Android devices may work,
+        but have not been tested yet.
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
