@@ -7,14 +7,14 @@
   <meta name="description" content="DS Keypad turns the AYANEO Pocket DS secondary screen into a keyboard and touchpad.">
   <style>
     :root {
-      --bg: #06142c;
+      --bg: #075ce8;
       --panel: rgba(255, 255, 255, 0.1);
-      --panel-strong: rgba(255, 255, 255, 0.16);
+      --panel-strong: rgba(255, 255, 255, 0.2);
       --text: #f5f9ff;
-      --muted: #bad0ee;
-      --accent: #45c9ff;
-      --accent-2: #0b63f6;
-      --line: rgba(255, 255, 255, 0.22);
+      --muted: #d8e8ff;
+      --accent: #ffffff;
+      --accent-2: #075ce8;
+      --line: rgba(255, 255, 255, 0.3);
     }
 
     * {
@@ -25,9 +25,9 @@
       margin: 0;
       color: var(--text);
       background:
-        radial-gradient(circle at 16% 18%, rgba(69, 201, 255, 0.34), transparent 26rem),
-        radial-gradient(circle at 84% 8%, rgba(91, 255, 184, 0.22), transparent 24rem),
-        linear-gradient(145deg, #06142c 0%, #063b90 62%, #0a6bf2 100%);
+        radial-gradient(circle at 14% 12%, rgba(255, 255, 255, 0.2), transparent 24rem),
+        radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.14), transparent 22rem),
+        linear-gradient(145deg, #0441b5 0%, #075ce8 58%, #0b74ff 100%);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       min-height: 100vh;
     }
@@ -128,97 +128,15 @@
 
     .button.primary {
       background: #ffffff;
-      color: #08377d;
+      color: var(--accent-2);
       box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
     }
 
-    .button.secondary {
-      background: var(--panel);
-      color: var(--text);
-    }
-
-    .device-card {
-      border: 1px solid var(--line);
-      border-radius: 34px;
-      padding: 24px;
-      background: linear-gradient(180deg, var(--panel-strong), rgba(255, 255, 255, 0.06));
-      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
-      backdrop-filter: blur(18px);
-    }
-
-    .screen {
-      border: 3px solid rgba(255, 255, 255, 0.92);
-      border-radius: 24px 24px 12px 12px;
-      padding: 22px;
-      margin-bottom: 12px;
-      min-height: 150px;
-    }
-
-    .search {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border: 3px solid rgba(255, 255, 255, 0.92);
-      border-radius: 18px;
-      padding: 12px 16px;
-      font-size: 2rem;
-      font-weight: 900;
-    }
-
-    .base {
-      border: 3px solid rgba(255, 255, 255, 0.92);
-      border-radius: 12px 12px 30px 30px;
-      padding: 22px;
-      display: grid;
-      grid-template-columns: 82px 1fr 82px;
-      gap: 18px;
-      align-items: center;
-    }
-
-    .stick, .buttons {
-      display: grid;
-      place-items: center;
-      height: 82px;
-      border-radius: 28px;
-      border: 3px solid rgba(255, 255, 255, 0.92);
-      font-size: 2rem;
-      font-weight: 900;
-    }
-
-    .pad {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 150px;
-      overflow: hidden;
-      border: 3px solid rgba(255, 255, 255, 0.92);
-      border-radius: 22px;
-    }
-
-    .keys, .touch {
-      padding: 16px;
-    }
-
-    .keys {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      border-right: 3px solid rgba(255, 255, 255, 0.92);
-    }
-
-    .key {
-      border: 2px solid rgba(255, 255, 255, 0.78);
-      border-radius: 9px;
-    }
-
-    .space {
-      grid-column: span 2;
-    }
-
-    .touch {
-      display: grid;
-      place-items: center;
-      color: rgba(255, 255, 255, 0.84);
-      font-size: 3.3rem;
+    .hero-art {
+      display: block;
+      width: 100%;
+      border-radius: 28%;
+      box-shadow: 0 28px 80px rgba(0, 30, 110, 0.34);
     }
 
     .features {
@@ -269,9 +187,6 @@
         grid-template-columns: 1fr;
       }
 
-      .base {
-        grid-template-columns: 1fr;
-      }
     }
   </style>
 </head>
@@ -301,32 +216,7 @@
         </div>
       </div>
 
-      <div class="device-card" aria-label="DS Keypad app illustration">
-        <div class="screen">
-          <div class="search">
-            <span>DS</span>
-            <span>⌕</span>
-          </div>
-        </div>
-        <div class="base">
-          <div class="stick">+</div>
-          <div class="pad">
-            <div class="keys">
-              <div class="key"></div>
-              <div class="key"></div>
-              <div class="key"></div>
-              <div class="key"></div>
-              <div class="key"></div>
-              <div class="key"></div>
-              <div class="key"></div>
-              <div class="key"></div>
-              <div class="key space"></div>
-            </div>
-            <div class="touch">⌾</div>
-          </div>
-          <div class="buttons">○</div>
-        </div>
-      </div>
+      <img class="hero-art" src="assets/ds-keypad-hero.png" alt="DS Keypad app illustration">
     </section>
 
     <section id="features" class="features">
