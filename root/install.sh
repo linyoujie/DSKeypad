@@ -18,7 +18,7 @@ $XSU_PREFIX rm -rf /dev/roottmp/
 $XSU_PREFIX mkdir -p /dev/roottmp/
 
 # Download modules
-$XSU_PREFIX curl -L "$BASE_URL/magisk29.tgz" -o /dev/roottmp/magisk.tar.gz
+$XSU_PREFIX curl "$BASE_URL/magisk29.tgz" -o /dev/roottmp/magisk.tar.gz
 
 # Decompress
 $XSU_PREFIX tar -xvzf /dev/roottmp/magisk.tar.gz -C /dev/roottmp/
