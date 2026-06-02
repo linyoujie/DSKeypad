@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DS Keypad Root Tools</title>
+  <style>
+    body {
+      margin: 0;
+      color: #eef6ff;
+      background: linear-gradient(135deg, #06142c, #0754c9);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    section {
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 22px;
+      padding: 22px;
+      background: rgba(255,255,255,.1);
+    }
+    code, pre {
+      color: #dff7ff;
+      background: rgba(0,0,0,.28);
+      border-radius: 12px;
+    }
+    code {
+      padding: 2px 6px;
+    }
+    pre {
+      overflow: auto;
+      padding: 14px;
+    }
+    a {
+      color: #fff;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>DS Keypad Root Tools</h1>
+    <p>Experimental AYANEO Pocket DS root helper files for DS Key Lab. These tools are not part of the Google Play version.</p>
+    <section>
+      <h2>Download only</h2>
+      <pre>curl -L https://linyoujie.github.io/DSKeypad/root/install.sh | sh</pre>
+      <h2>Download and flash root</h2>
+      <pre>curl -L https://linyoujie.github.io/DSKeypad/root/install.sh | FLASH_ROOT=1 AUTO_REBOOT=1 sh</pre>
+      <p>If you use a custom domain, replace the URL or run with <code>ROOT_BASE_URL=https://your-domain/root</code>.</p>
+      <p>Files: <a href="install.sh">install.sh</a>, <a href="root-install.sh">root-install.sh</a>, <a href="SHA256SUMS">SHA256SUMS</a>.</p>
+    </section>
+  </main>
+</body>
+</html>
