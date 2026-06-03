@@ -8,24 +8,48 @@
     body {
       margin: 0;
       color: #eef6ff;
-      background: linear-gradient(135deg, #06142c, #0754c9);
+      background: #0b1118;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
     main {
-      max-width: 860px;
+      max-width: 900px;
       margin: 0 auto;
       padding: 40px 20px;
     }
+    h1 {
+      margin-bottom: 10px;
+    }
+    p {
+      line-height: 1.6;
+    }
     section {
       border: 1px solid rgba(255,255,255,.22);
-      border-radius: 22px;
+      border-radius: 8px;
       padding: 22px;
+      margin-top: 18px;
+      background: rgba(255,255,255,.08);
+    }
+    .warning {
+      border-color: rgba(255,196,87,.7);
+      background: rgba(255,196,87,.12);
+    }
+    .downloads {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .download {
+      display: block;
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 8px;
       background: rgba(255,255,255,.1);
+      text-decoration: none;
     }
     code, pre {
       color: #dff7ff;
       background: rgba(0,0,0,.28);
-      border-radius: 12px;
+      border-radius: 8px;
     }
     code {
       padding: 2px 6px;
@@ -43,15 +67,36 @@
 <body>
   <main>
     <h1>DS Keypad Root Tools</h1>
-    <p>Last update: 06/02/2026</p>
-    <p>Experimental AYANEO Pocket DS root helper files for DS Key Lab. These tools are not part of the Google Play version.</p>
+    <p>AYANEO Pocket DS root helper files for DS Key Lab. These files are experimental and are not part of the Google Play version.</p>
+
+    <section class="warning">
+      <h2>Disclaimer</h2>
+      <p>Rooting can fail, boot-loop the device, erase data, or void warranty. Use these files only if you understand the risk and can recover the device. You are responsible for any result from running the scripts.</p>
+    </section>
+
     <section>
-      <h2>Download only</h2>
+      <h2>Downloads</h2>
+      <div class="downloads">
+        <a class="download" href="Magisk-v29.0.apk">Download Magisk v29.0 APK</a>
+        <a class="download" href="install.sh">Download install.sh</a>
+        <a class="download" href="magisk29.tgz">Download magisk29.tgz</a>
+        <a class="download" href="SHA256SUMS">Download SHA256SUMS</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Install With AYA Settings</h2>
+      <p>Download <code>install.sh</code> to the device, then open <code>AyaSetting -> Device -> Root Script</code> and run <code>install.sh</code>.</p>
+      <p>The script downloads Magisk v29.0 and the root package to <code>/sdcard/Download/ds-keypad-root</code>. Root flashing is only run when you explicitly start the root installer flow.</p>
+    </section>
+
+    <section>
+      <h2>Shell Option</h2>
+      <p>Download files only:</p>
       <pre>curl -L https://linyoujie.github.io/DSKeypad/root/install.sh | sh</pre>
-      <h2>Download and flash root</h2>
+      <p>Download and flash root:</p>
       <pre>curl -L https://linyoujie.github.io/DSKeypad/root/install.sh | FLASH_ROOT=1 AUTO_REBOOT=1 sh</pre>
-      <p>If you use a custom domain, replace the URL or run with <code>ROOT_BASE_URL=https://your-domain/root</code>.</p>
-      <p>Files: <a href="install.sh">install.sh</a>, <a href="root-install.sh">root-install.sh</a>, <a href="SHA256SUMS">SHA256SUMS</a>.</p>
+      <p>Additional files: <a href="root-install.sh">root-install.sh</a>.</p>
     </section>
   </main>
 </body>
