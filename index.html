@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>DS Keypad</title>
-  <meta name="description" content="DS Keypad turns the AYANEO Pocket DS secondary screen into a keyboard and touchpad.">
+  <meta name="description" content="DS Keypad turns the AYANEON Pocket DS secondary screen into a keyboard and touchpad.">
   <style>
     :root {
       --bg: #075ce8;
@@ -63,8 +63,16 @@
       place-items: center;
       width: 42px;
       height: 42px;
-      border: 2px solid rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.82);
       border-radius: 14px;
+      background:
+        radial-gradient(circle at 25% 18%, rgba(255, 255, 255, 0.38), transparent 44%),
+        linear-gradient(135deg, #39c8f0 0%, #0870f4 50%, #0641ae 100%);
+      color: #ffffff;
+      font-size: 0.98rem;
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      text-shadow: 0 3px 0 rgba(0, 45, 122, 0.85);
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
     }
 
@@ -173,11 +181,23 @@
       width: 64px;
       height: 64px;
       flex: 0 0 64px;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(255, 255, 255, 0.72);
       border-radius: 16px;
-      background: #000;
+      background:
+        radial-gradient(circle at 25% 18%, rgba(255, 255, 255, 0.34), transparent 44%),
+        linear-gradient(135deg, #39c8f0 0%, #0870f4 50%, #0641ae 100%);
+      color: #ffffff;
       object-fit: cover;
-      font-weight: 800;
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      text-shadow: 0 4px 0 rgba(0, 45, 122, 0.85);
+      box-shadow: 0 14px 34px rgba(0, 38, 120, 0.2);
+    }
+
+    img.product-logo {
+      background: #000;
+      text-shadow: none;
     }
 
     .product h2, .product p {
