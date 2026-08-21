@@ -4,17 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>DS Keypad - Second-screen controls for AYANEO Pocket DS</title>
-  <meta name="description" content="Turn the AYANEO Pocket DS secondary screen into a full keyboard, thumb-friendly typing surface, and precision touchpad.">
+  <meta name="description" content="Turn the AYANEO Pocket DS lower display into a full keyboard and precision touchpad.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0,0" rel="stylesheet">
   <style>
     :root {
-      --blue: #075ee8;
-      --blue-dark: #063f9c;
-      --blue-soft: #eaf3ff;
-      --cyan: #22c7d6;
-      --ink: #10243f;
-      --muted: #5b6f89;
-      --surface: #fff;
-      --line: #cbd9e8;
+      --navy: #022c7d;
+      --navy-deep: #01276d;
+      --blue: #0758d6;
+      --cyan: #13bbec;
+      --ink: #10264a;
+      --muted: #647491;
+      --line: #d8e1ee;
+      --soft: #f3f7fc;
+      --surface: #fcfdff;
+      --white: #ffffff;
     }
 
     * { box-sizing: border-box; }
@@ -23,306 +28,493 @@
       margin: 0;
       color: var(--ink);
       background: var(--surface);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: "Inter", "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
     a { color: inherit; }
-    .shell { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+    .shell { width: min(1356px, calc(100% - 64px)); margin-inline: auto; }
+
+    .hero-stage {
+      position: relative;
+      min-height: 795px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .hero-stage::before {
+      position: absolute;
+      inset: 0;
+      content: "";
+      background: var(--navy-deep) url("assets/ds-keypad-hero-blue-field.png") center / cover no-repeat;
+      clip-path: polygon(0 0, 75% 0, 60% 100%, 0 100%);
+    }
 
     header {
+      position: relative;
+      z-index: 3;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-height: 74px;
+      min-height: 132px;
       gap: 24px;
     }
     .brand {
       display: inline-flex;
       align-items: center;
-      gap: 11px;
-      color: var(--ink);
+      gap: 18px;
+      color: var(--white);
       text-decoration: none;
-      font-size: 1.05rem;
-      font-weight: 800;
+      font-size: 2rem;
+      font-weight: 700;
     }
     .brand img {
-      width: 40px;
-      height: 40px;
+      width: 66px;
+      height: 66px;
+      border: 1px solid rgba(255,255,255,.7);
       border-radius: 8px;
       object-fit: cover;
     }
     nav {
       display: flex;
       align-items: center;
-      gap: 22px;
-      color: var(--muted);
-      font-size: .94rem;
-      font-weight: 650;
+      gap: 32px;
+      color: var(--ink);
+      font-size: .96rem;
+      font-weight: 700;
     }
-    nav a { text-decoration: none; }
-    nav a:hover { color: var(--blue); }
+    nav a {
+      position: relative;
+      text-decoration: none;
+    }
+    nav a:first-child { color: var(--blue); }
+    nav a:first-child::after {
+      position: absolute;
+      left: 0;
+      right: 36%;
+      bottom: -14px;
+      height: 2px;
+      content: "";
+      background: var(--blue);
+    }
+    nav a:focus-visible,
+    .privacy-link:focus-visible,
+    .button:focus-visible,
+    .other-link:focus-visible {
+      outline: 3px solid var(--cyan);
+      outline-offset: 4px;
+    }
 
-    .hero-band {
-      color: #fff;
-      background: linear-gradient(120deg, var(--blue-dark) 0%, var(--blue) 62%, #0878ef 100%);
-      overflow: hidden;
-    }
     .hero {
+      position: relative;
+      z-index: 2;
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(280px, 420px);
+      grid-template-columns: minmax(0, 1fr) minmax(500px, .8fr);
       align-items: center;
-      gap: 54px;
-      min-height: 560px;
-      padding: 62px 0 68px;
+      min-height: 663px;
+      padding: 44px 0 72px;
     }
-    .product-mark {
-      display: inline-flex;
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+      color: var(--white);
+      transform: translateY(20px);
+    }
+    .eyebrow {
+      display: flex;
       align-items: center;
       gap: 12px;
-      color: #dff6ff;
-      font-weight: 800;
+      margin-bottom: 36px;
+      color: var(--cyan);
+      font-size: .94rem;
+      font-weight: 700;
     }
-    .product-mark img {
-      width: 54px;
-      height: 54px;
-      border: 1px solid rgba(255,255,255,.65);
-      border-radius: 8px;
-      object-fit: cover;
+    .eyebrow::before {
+      width: 34px;
+      height: 3px;
+      content: "";
+      background: var(--cyan);
     }
     h1 {
-      max-width: 720px;
-      margin: 22px 0 20px;
-      font-size: clamp(3.2rem, 7vw, 5.9rem);
-      line-height: .96;
+      margin: 0;
+      font-size: clamp(4rem, 5.5vw, 5.1rem);
+      line-height: 1.03;
+      font-weight: 700;
       letter-spacing: 0;
     }
     .lead {
-      max-width: 650px;
-      margin: 0;
-      color: #d9eaff;
-      font-size: clamp(1.08rem, 2vw, 1.3rem);
-      line-height: 1.55;
+      max-width: 520px;
+      margin: 43px 0 0;
+      color: #b8caea;
+      font-size: 1.18rem;
+      line-height: 1.6;
     }
-    .hero-actions {
+    .actions {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      gap: 18px;
-      margin-top: 30px;
+      gap: 38px;
+      margin-top: 54px;
     }
     .button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 50px;
-      padding: 0 20px;
+      gap: 12px;
+      min-width: 334px;
+      min-height: 72px;
+      padding: 0 30px;
       border-radius: 8px;
+      color: var(--ink);
+      background: var(--white);
       text-decoration: none;
-      font-weight: 800;
+      font-size: 1.04rem;
+      font-weight: 700;
+      box-shadow: 0 14px 34px rgba(0,0,0,.16);
     }
-    .button-primary {
-      color: var(--blue-dark);
-      background: #fff;
-      box-shadow: 0 14px 32px rgba(0,24,76,.25);
+    .play-mark {
+      width: 30px;
+      height: 34px;
+      flex: 0 0 auto;
     }
     .privacy-link {
-      color: #d9eaff;
-      font-size: .94rem;
-      font-weight: 650;
+      color: #afc1e4;
+      font-size: .92rem;
+      font-weight: 600;
     }
-    .hero-art {
-      width: 100%;
-      max-width: 420px;
-      justify-self: end;
-      border-radius: 8px;
-      box-shadow: 0 30px 80px rgba(0,28,84,.3);
+    .device-art {
+      position: absolute;
+      z-index: 1;
+      top: -65px;
+      right: 0;
+      width: min(720px, 52vw);
+      height: auto;
+      filter: drop-shadow(0 22px 24px rgba(1, 26, 79, .12));
+      transform: rotate(1.5deg);
     }
 
     .features {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      width: 100%;
+      min-height: 263px;
       border-bottom: 1px solid var(--line);
+      background: #fdfefe;
     }
     .feature {
-      min-height: 190px;
-      padding: 40px 34px;
-      border-right: 1px solid var(--line);
+      position: relative;
+      display: grid;
+      grid-template-columns: 62px 1fr;
+      align-content: center;
+      align-items: center;
+      gap: 54px;
+      padding: 44px clamp(40px, 3.9vw, 58px);
     }
-    .feature:last-child { border-right: 0; }
-    .feature-number {
+    .feature:not(:last-child)::after {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 1px;
+      height: 148px;
+      content: "";
+      background: var(--line);
+      transform: translateY(-50%);
+    }
+    .feature-icon {
+      display: grid;
+      place-items: center;
+      width: 62px;
+      height: 62px;
       color: var(--cyan);
-      font-size: .82rem;
-      font-weight: 900;
     }
-    .feature h2 { margin: 18px 0 10px; font-size: 1.28rem; }
-    .feature p { margin: 0; color: var(--muted); line-height: 1.55; }
+    .feature-icon .material-symbols-rounded {
+      display: block;
+      font-size: 54px;
+      line-height: 1;
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+    }
+    .feature-copy { align-self: center; }
+    .feature h2 {
+      margin: 0 0 10px;
+      font-size: 1.3rem;
+      line-height: 1.25;
+    }
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .94rem;
+      line-height: 1.6;
+    }
 
-    .fit-band { background: var(--blue-soft); }
     .fit {
       display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(260px, .85fr);
+      grid-template-columns: minmax(0, 1fr) minmax(320px, .8fr);
       align-items: center;
-      gap: 60px;
-      padding: 72px 0;
+      gap: 80px;
+      padding: 92px 0;
     }
-    .section-label {
+    .section-kicker {
       color: var(--blue);
-      font-size: .82rem;
-      font-weight: 900;
+      font-size: .78rem;
+      font-weight: 800;
       text-transform: uppercase;
     }
     .fit h2 {
-      margin: 14px 0 18px;
-      font-size: clamp(2rem, 4vw, 3.4rem);
-      line-height: 1.05;
+      max-width: 680px;
+      margin: 14px 0 20px;
+      font-size: clamp(2.5rem, 4.4vw, 4.2rem);
+      line-height: 1.08;
     }
-    .fit p { margin: 0; color: var(--muted); font-size: 1.08rem; line-height: 1.65; }
+    .fit p {
+      max-width: 650px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.7;
+    }
     .fit-note {
-      padding: 26px;
-      border: 1px solid #a9c8ee;
-      border-left: 5px solid var(--cyan);
-      border-radius: 8px;
-      background: rgba(255,255,255,.7);
+      padding: 30px 0 30px 28px;
+      border-left: 4px solid var(--cyan);
     }
-    .fit-note strong { display: block; margin-bottom: 9px; color: var(--ink); }
+    .fit-note strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1.05rem;
+    }
 
+    .other-band { background: var(--soft); }
     .other-project {
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
-      gap: 18px;
-      margin: 58px auto;
-      padding: 20px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
+      gap: 20px;
+      padding: 32px 0;
     }
     .other-project img {
-      width: 52px;
-      height: 52px;
+      width: 48px;
+      height: 48px;
       border-radius: 8px;
       object-fit: cover;
     }
-    .other-project h2 { margin: 0 0 4px; font-size: 1.05rem; }
-    .other-project p { margin: 0; color: var(--muted); font-size: .94rem; }
-    .other-link { color: var(--blue); font-weight: 800; text-decoration: none; }
+    .other-project h2 {
+      margin: 0 0 4px;
+      font-size: 1rem;
+    }
+    .other-project p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+    .other-link {
+      color: var(--blue);
+      font-size: .9rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
 
     footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 24px;
-      padding: 28px 0 40px;
-      border-top: 1px solid var(--line);
+      padding: 30px 0 42px;
       color: var(--muted);
-      font-size: .9rem;
+      font-size: .84rem;
     }
-    .footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
+    }
     .footer-links a { text-decoration: none; }
 
-    @media (max-width: 780px) {
-      .shell { width: min(100% - 28px, 680px); }
-      header { min-height: 66px; }
-      nav a:nth-child(2) { display: none; }
+    @media (min-width: 721px) and (max-height: 800px) {
+      .hero-stage { min-height: 680px; }
+      header { min-height: 80px; }
       .hero {
-        grid-template-columns: 1fr;
-        gap: 36px;
-        min-height: 0;
-        padding: 48px 0 38px;
+        min-height: 600px;
+        padding: 36px 0 50px;
       }
-      h1 { font-size: clamp(2.9rem, 15vw, 4.4rem); }
-      .hero-art { width: min(78vw, 340px); justify-self: center; }
+      .hero-copy { transform: none; }
+      .device-art {
+        top: 14px;
+        width: min(560px, 48vw);
+      }
+    }
+
+    @media (max-width: 980px) {
+      .hero-stage {
+        min-height: 680px;
+        background: var(--navy-deep) url("assets/ds-keypad-hero-blue-field.png") center / cover no-repeat;
+      }
+      .hero-stage::before { display: none; }
+      nav { color: var(--white); }
+      nav a:first-child { color: var(--cyan); }
+      .hero {
+        grid-template-columns: minmax(0, 1fr) minmax(360px, .9fr);
+        min-height: 586px;
+      }
+      .device-art {
+        top: 90px;
+        right: -100px;
+        width: min(590px, 60vw);
+      }
       .features { grid-template-columns: 1fr; }
       .feature {
-        min-height: 0;
-        padding: 28px 8px;
-        border-right: 0;
+        min-height: 150px;
         border-bottom: 1px solid var(--line);
       }
+      .feature:not(:last-child)::after { display: none; }
       .feature:last-child { border-bottom: 0; }
-      .fit { grid-template-columns: 1fr; gap: 28px; padding: 54px 0; }
-      .other-project { grid-template-columns: auto 1fr; }
-      .other-link { grid-column: 2; }
-      footer { align-items: flex-start; flex-direction: column; }
     }
-    @media (max-width: 470px) {
-      nav { gap: 14px; font-size: .86rem; }
-      nav a:nth-child(3) { display: none; }
-      .product-mark img { width: 48px; height: 48px; }
-      .hero-actions { align-items: flex-start; flex-direction: column; }
-      .button { width: 100%; }
+
+    @media (max-width: 720px) {
+      .shell { width: min(100% - 30px, 620px); }
+      .hero-stage { min-height: auto; }
+      header { min-height: 76px; }
+      .brand { font-size: 1.15rem; }
+      .brand img { width: 42px; height: 42px; }
+      nav { gap: 18px; font-size: .82rem; }
+      nav a:nth-child(2) { display: none; }
+      nav a:first-child::after { display: none; }
+      .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        min-height: 0;
+        padding: 54px 0 42px;
+      }
+      .hero-copy { max-width: none; transform: none; }
+      .eyebrow { margin-bottom: 22px; }
+      h1 { font-size: clamp(3rem, 14vw, 4.4rem); }
+      .lead { font-size: 1rem; }
+      .actions { margin-top: 30px; }
+      .device-art {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: min(100%, 540px);
+        margin: 38px auto 0;
+        transform: none;
+      }
+      .feature {
+        grid-template-columns: 58px 1fr;
+        gap: 14px;
+        min-height: 0;
+        padding: 28px 15px;
+      }
+      .feature-icon { width: 50px; height: 50px; }
+      .feature-icon .material-symbols-rounded { font-size: 44px; }
+      .fit {
+        grid-template-columns: 1fr;
+        gap: 42px;
+        padding: 68px 0;
+      }
+      .other-project {
+        grid-template-columns: auto 1fr;
+      }
+      .other-link { grid-column: 2; }
+      footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 440px) {
+      nav { display: none; }
+      .hero { padding: 34px 0 20px; }
+      .eyebrow { margin-bottom: 18px; }
+      h1 { font-size: 2.65rem; }
+      .lead { margin-top: 18px; line-height: 1.5; }
+      .actions {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 18px;
+        margin-top: 24px;
+      }
+      .button { width: 100%; min-width: 0; }
+      .device-art {
+        width: min(68vw, 260px);
+        margin-top: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <header class="shell">
-    <a class="brand" href="#top" aria-label="DS Keypad home">
-      <img src="assets/ds-keypad-app-icon-512.png" alt="DS Keypad app icon">
-      <span>DS Keypad</span>
-    </a>
-    <nav aria-label="Primary navigation">
-      <a href="https://play.google.com/store/apps/details?id=com.dscompanion.app">Play Store</a>
-      <a href="#features">Features</a>
-      <a href="privacy.html">Privacy</a>
-    </nav>
-  </header>
+  <main>
+    <section class="hero-stage" id="top">
+      <header class="shell">
+        <a class="brand" href="#top" aria-label="DS Keypad home">
+          <img src="assets/ds-keypad-app-icon-512.png" alt="DS Keypad app icon">
+          <span>DS Keypad</span>
+        </a>
+        <nav aria-label="Primary navigation">
+          <a href="https://play.google.com/store/apps/details?id=com.dscompanion.app">Get it on Google Play</a>
+          <a href="privacy.html">Privacy Policy</a>
+        </nav>
+      </header>
 
-  <main id="top">
-    <section class="hero-band">
       <div class="hero shell">
-        <div>
-          <div class="product-mark">
-            <img src="assets/ds-keypad-app-icon-512.png" alt="">
-            <span>Made mainly for AYANEO Pocket DS</span>
-          </div>
-          <h1>Turn your second screen into real controls.</h1>
-          <p class="lead">DS Keypad transforms the lower display into a keyboard and touchpad, keeping the main screen clear for the app or game that matters.</p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="https://play.google.com/store/apps/details?id=com.dscompanion.app">Get it on Google Play</a>
+        <div class="hero-copy">
+          <div class="eyebrow">Built for AYANEO Pocket DS</div>
+          <h1>More screen<br>for what matters.</h1>
+          <p class="lead">Turn the lower display into a full keyboard and precision touchpad.</p>
+          <div class="actions">
+            <a class="button" href="https://play.google.com/store/apps/details?id=com.dscompanion.app">
+              <img class="play-mark" src="assets/google-play-mark.svg" alt="">
+              <span>Get it on Google Play</span>
+            </a>
             <a class="privacy-link" href="privacy.html">Privacy Policy</a>
           </div>
         </div>
-        <img class="hero-art" src="assets/ds-keypad-hero.png" alt="AYANEO Pocket DS using DS Keypad on its secondary screen">
+        <img class="device-art" src="assets/ds-keypad-device-target-v2.png" alt="AYANEO Pocket DS with DS Keypad keyboard and touchpad controls">
       </div>
     </section>
 
-    <section id="features" class="features shell" aria-label="DS Keypad features">
+    <section class="features" id="features" aria-label="DS Keypad features">
       <article class="feature">
-        <span class="feature-number">01</span>
-        <h2>Full Keyboard</h2>
-        <p>Reach a complete keyboard layout without covering the content on your main screen.</p>
+        <div class="feature-icon"><span class="material-symbols-rounded" aria-hidden="true">keyboard</span></div>
+        <div class="feature-copy">
+          <h2>Keyboard</h2>
+          <p>Turn the lower display into a complete keyboard without covering the main screen.</p>
+        </div>
       </article>
       <article class="feature">
-        <span class="feature-number">02</span>
-        <h2>Thumb-friendly Typing</h2>
-        <p>Switch to a compact phone-style layout for faster input while holding the device.</p>
+        <div class="feature-icon"><span class="material-symbols-rounded" aria-hidden="true">bolt</span></div>
+        <div class="feature-copy">
+          <h2>Fast Typing</h2>
+          <p>Type quickly and comfortably with a compact phone-style layout.</p>
+        </div>
       </article>
       <article class="feature">
-        <span class="feature-number">03</span>
-        <h2>Precision Touchpad</h2>
-        <p>Move the pointer, click, and navigate from the lower display with familiar gestures.</p>
+        <div class="feature-icon"><span class="material-symbols-rounded" aria-hidden="true">touch_app</span></div>
+        <div class="feature-copy">
+          <h2>Touchpad</h2>
+          <p>Navigate, click, and control the pointer with precision from the lower display.</p>
+        </div>
       </article>
     </section>
 
-    <section class="fit-band">
-      <div class="fit shell">
-        <div>
-          <span class="section-label">Built for the dual-screen experience</span>
-          <h2>Keep the main screen focused.</h2>
-          <p>Controls stay on the secondary display, leaving more room for games, desktop apps, and everything else you opened the device to use.</p>
-        </div>
-        <div class="fit-note">
-          <strong>Designed and tested mainly for AYANEO Pocket DS.</strong>
-          <p>Other dual-screen Android devices may work, but have not been tested yet.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="other-project shell" aria-label="Other project">
-      <img src="assets/starlite-host-icon.png" alt="Starlite Host icon">
+    <section class="fit shell">
       <div>
-        <h2>Other project: Starlite Host</h2>
-        <p>A wireless Android streaming host for compatible Moonlight clients.</p>
+        <span class="section-kicker">A focused dual-screen utility</span>
+        <h2>Keep the main screen clear.</h2>
+        <p>DS Keypad moves everyday input controls to the secondary display, leaving the main screen ready for games, desktop apps, and everything else that deserves the space.</p>
       </div>
-      <a class="other-link" href="starlite.html">Explore Starlite</a>
+      <div class="fit-note">
+        <strong>Designed and tested mainly for AYANEO Pocket DS.</strong>
+        <p>Other dual-screen Android devices may work, but have not been tested yet.</p>
+      </div>
+    </section>
+
+    <section class="other-band">
+      <div class="other-project shell">
+        <img src="assets/starlite-host-icon.png" alt="Starlite Host icon">
+        <div>
+          <h2>Other project: Starlite Host</h2>
+          <p>A wireless Android streaming host for compatible Moonlight clients.</p>
+        </div>
+        <a class="other-link" href="starlite.html">Explore Starlite</a>
+      </div>
     </section>
   </main>
 
